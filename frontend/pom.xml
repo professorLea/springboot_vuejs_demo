@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>minions</artifactId>
+    <groupId>com.netease.Mutest</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>frontend</artifactId>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>1.2</version>
+        <executions>
+          <!-- Install our node and npm version to run npm/node scripts-->
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <configuration>
+              <nodeVersion>v6.9.1</nodeVersion>
+              <npmVersion>3.10.9</npmVersion>
+              <nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+              <npmDownloadRoot>http://registry.npmjs.org/npm/-/</npmDownloadRoot>
+            </configuration>
+          </execution>
+
+          <!-- Set NPM Registry -->
+          <execution>
+            <id>npm set registry</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <!--<arguments>config set registry https://registry.npmjs.org</arguments>-->
+              <arguments>config set registry https://registry.npm.taobao.org</arguments>
+            </configuration>
+          </execution>
+
+          <!-- Set SSL privilege -->
+          <execution>
+            <id>npm set non-strict ssl</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <!-- Optional configuration which provides for running any npm command -->
+            <configuration>
+              <arguments>config set strict-ssl false</arguments>
+            </configuration>
+          </execution>
+
+          <!-- Install all project dependencies -->
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <!-- optional: default phase is "generate-resources" -->
+            <phase>generate-resources</phase>
+            <!-- Optional configuration which provides for running any npm command -->
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
+
+          <!-- Build and minify static files -->
+          <execution>
+            <id>npm run build</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>run build</arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
