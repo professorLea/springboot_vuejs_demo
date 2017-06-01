@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
+import VueResource from 'vue-resource'
 import bot from './components/bot.vue'
 import unity from './components/unity.vue'
-
 /* eslint-disable no-new */
+Vue.use(VueResource)
+
 Vue.use(VueRouter)
 
 // 1. 定义（路由）组件。
