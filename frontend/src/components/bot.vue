@@ -1,4 +1,4 @@
-<template xmlns:>
+<template xmlns: xmlns:>
   <div class="bot">
       <!-- Content Header (Page header) -->
       <section class="content-header">
@@ -23,7 +23,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">全部用例</span>
-                <span class="info-box-number">1024</span>
+                <span class="info-box-number">{{summary.total_cases}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -36,7 +36,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Pass用例</span>
-                <span class="info-box-number">694</span>
+                <span class="info-box-number">{{summary.case_passed}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -48,8 +48,8 @@
               <span class="info-box-icon bg-yellow"><i class="fa fa-bar-chart"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Pass radio</span>
-                <span class="info-box-number">67.8%</span>
+                <span class="info-box-text">Pass radio(%)</span>
+                <span class="info-box-number">{{summary.pass_radio}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -60,60 +60,60 @@
         <h3>其中</h3>
         <h4>1，实体</h4>
         <div class="row">
-          <div class="col-md-3 col-sm-6 col-xs-12">
+          <div v-for="e in entity" class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-yellow">
               <span class="info-box-icon"><i class="fa fa-file"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">无实体</span>
-                <span class="info-box-number">732</span>
+                <span class="info-box-text">{{e.entity_type}}</span>
+                <span class="info-box-number">{{e.case_num}}</span>
 
                 <div class="progress">
-                  <div class="progress-bar" style="width: 69.7%"></div>
+                  <div class="progress-bar" v-bind:style="{width: calculatePercentage(e) + '%'}"></div>
                 </div>
                 <span class="progress-description">
-                    69.7% passed
+                    {{e.pass_radio}}% passed
                   </span>
               </div>
               <!-- /.info-box-content -->
             </div>
           </div>
-          <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box bg-yellow">
-              <span class="info-box-icon"><i class="fa fa-file"></i></span>
+          <!--<div class="col-md-3 col-sm-6 col-xs-12">-->
+          <!--<div class="info-box bg-yellow">-->
+          <!--<span class="info-box-icon"><i class="fa fa-file"></i></span>-->
 
-              <div class="info-box-content">
-                <span class="info-box-text">单实体</span>
-                <span class="info-box-number">289</span>
+          <!--<div class="info-box-content">-->
+          <!--<span class="info-box-text">单实体</span>-->
+          <!--<span class="info-box-number">289</span>-->
 
-                <div class="progress">
-                  <div class="progress-bar" style="width: 62.6%"></div>
-                </div>
-                <span class="progress-description">
-                    62.6% passed
-                  </span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box bg-yellow">
-              <span class="info-box-icon"><i class="fa fa-file"></i></span>
+          <!--<div class="progress">-->
+          <!--<div class="progress-bar" style="width: 62.6%"></div>-->
+          <!--</div>-->
+          <!--<span class="progress-description">-->
+          <!--62.6% passed-->
+          <!--</span>-->
+          <!--</div>-->
+          <!--&lt;!&ndash; /.info-box-content &ndash;&gt;-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--<div class="col-md-3 col-sm-6 col-xs-12">-->
+          <!--<div class="info-box bg-yellow">-->
+          <!--<span class="info-box-icon"><i class="fa fa-file"></i></span>-->
 
-              <div class="info-box-content">
-                <span class="info-box-text">多实体</span>
-                <span class="info-box-number">3</span>
+          <!--<div class="info-box-content">-->
+          <!--<span class="info-box-text">多实体</span>-->
+          <!--<span class="info-box-number">3</span>-->
 
-                <div class="progress">
-                  <div class="progress-bar" style="width: 100%"></div>
-                </div>
-                <span class="progress-description">
-                    100% passed
-                  </span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-          </div>
+          <!--<div class="progress">-->
+          <!--<div class="progress-bar" style="width: 100%"></div>-->
+          <!--</div>-->
+          <!--<span class="progress-description">-->
+          <!--100% passed-->
+          <!--</span>-->
+          <!--</div>-->
+          <!--&lt;!&ndash; /.info-box-content &ndash;&gt;-->
+          <!--</div>-->
+          <!--</div>-->
         </div>
         <h4>2，意图</h4>
         <div class="row">
@@ -130,6 +130,7 @@
                           :css="css"
                           data-path=""
                           pagination-path=""
+                          :append-params="moreParams"
                           @vuetable:pagination-data="onPaginationData"
                 ></vuetable>
                 <!--<vuetable-pagination-info ref="paginationInfo"-->
@@ -194,28 +195,37 @@
     data () {
       return {
         css: BootstrapStyle,
+        moreParams: {
+          reportId: 1
+        },
         fields: [
           {
-            name: 'name',
+            name: 'contextual',
+            title: '问法',
+            titleClass: 'text-center',
+            dataClass: 'text-center'
+          },
+          {
+            name: 'intent',
             title: '意图',
             titleClass: 'text-center',
             dataClass: 'text-center'
           },
           {
-            name: 'case_num',
+            name: 'caseNum',
             title: '用例数',
             titleClass: 'text-center',
             dataClass: 'text-center'
           },
           {
-            name: 'case_passed',
+            name: 'casePassed',
             title: '用例通过数',
             titleClass: 'text-center',
             dataClass: 'text-center'
           },
           {
-            name: 'case_pass_radio',
-            title: '用例通过率',
+            name: 'casePassRadio',
+            title: '用例通过率（%）',
             titleClass: 'text-center',
             dataClass: 'text-center'
           }
@@ -239,7 +249,9 @@
             titleClass: 'text-center',
             dataClass: 'text-center'
           }
-        ]
+        ],
+        summary: [],
+        entity: []
       }
     },
     methods: {
@@ -249,7 +261,30 @@
       },
       onChangePage (page) {
         this.$refs.vuetable.changePage(page)
+      },
+      getSummary (id) {
+        this.$http.get('/api/summary/', {params: {'reportId': id}}).then(response => {
+          this.summary = response.body
+          console.log(response.body)
+        }, response => {
+          console.log(response)
+        })
+      },
+      getEntityTest (id) {
+        this.$http.get('/api/entity/', {params: {'reportId': id}}).then(response => {
+          this.entity = response.body
+          console.log(response.body)
+        }, response => {
+          console.log(response)
+        })
+      },
+      calculatePercentage(e) {
+        return e.pass_radio;
       }
+    },
+    mounted () {
+      this.getSummary(1)
+      this.getEntityTest(1)
     }
   }
 </script>
