@@ -28,3 +28,6 @@ hs_err_pid*
 
 .DS_Store
 
+backend/src/main/resources/public
+
+
