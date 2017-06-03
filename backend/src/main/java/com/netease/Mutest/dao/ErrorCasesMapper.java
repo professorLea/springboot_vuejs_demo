@@ -1,6 +1,9 @@
 package com.netease.Mutest.dao;
 
 import com.netease.Mutest.model.ErrorCases;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ErrorCasesMapper {
     /**
@@ -50,4 +53,7 @@ public interface ErrorCasesMapper {
      * @mbggenerated Fri Jun 02 09:05:42 CST 2017
      */
     int updateByPrimaryKey(ErrorCases record);
+
+    //    List<ErrorCases> selectByTypeAndId(@Param("type")Integer type, @Param("errir")Integer errorId);
+    List<ErrorCases> selectByTypeAndId(@Param("errorType") Integer errorType, @Param("errorId") Integer errorId);
 }

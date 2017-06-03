@@ -1,5 +1,6 @@
 package com.netease.Mutest.controller;
 
+import com.netease.Mutest.dto.ErrorDetailResult;
 import com.netease.Mutest.dto.ErrorSummaryResult;
 import com.netease.Mutest.dto.IntentTestResult;
 import com.netease.Mutest.service.ErrorSummaryService;
@@ -25,10 +26,20 @@ public class ErrorSummaryController {
     @Resource
     private ErrorSummaryService errorSummaryService;
 
+
     @RequestMapping(value = "/errorcases")
     public ResponseEntity<List<ErrorSummaryResult>> getErrorSummary(@RequestParam(value = "reportId") String reportId) {
 
         List<ErrorSummaryResult> results = errorSummaryService.getErrorSummaryByReportId(reportId);
+
+        return new ResponseEntity<>(results, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/errordetail")
+    public ResponseEntity<List<ErrorDetailResult>> getErrordetail(@RequestParam(value = "type") String type, @RequestParam(value = "errorId") String errorId) {
+
+        List<ErrorDetailResult> results = errorSummaryService.getErrorDetailsById(type, errorId);
 
         return new ResponseEntity<>(results, HttpStatus.OK);
 

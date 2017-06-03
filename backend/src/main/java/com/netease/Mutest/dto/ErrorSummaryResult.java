@@ -7,6 +7,7 @@ package com.netease.Mutest.dto;
  * Time: 上午9:44
  */
 public class ErrorSummaryResult {
+    private Integer id;
     private String errorType;
     private Integer case_num;
 
@@ -24,5 +25,13 @@ public class ErrorSummaryResult {
 
     public void setCase_num(Integer case_num) {
         this.case_num = case_num;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

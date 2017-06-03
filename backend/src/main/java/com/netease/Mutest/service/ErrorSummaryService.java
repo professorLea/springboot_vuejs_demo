@@ -1,5 +1,6 @@
 package com.netease.Mutest.service;
 
+import com.netease.Mutest.dto.ErrorDetailResult;
 import com.netease.Mutest.dto.ErrorSummaryResult;
 
 import java.util.List;
@@ -13,4 +14,6 @@ import java.util.List;
 public interface ErrorSummaryService {
 
     List<ErrorSummaryResult> getErrorSummaryByReportId(String reportId);
+
+    List<ErrorDetailResult> getErrorDetailsById(String type, String errorId);
 }
