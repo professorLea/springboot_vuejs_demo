@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class IntentController {
     private IntentService intentService;
 
     @RequestMapping(value = "/intent")
-    public ResponseEntity<List<IntentTestResult>> getIntent(@RequestParam(value = "reportId", required = true) String reportId) {
-
+    public ResponseEntity<List<IntentTestResult>> getIntent(@RequestParam(value = "reportId") String reportId) {
+        DecimalFormat df = new DecimalFormat("#.##");
         List<IntentTestResult> results = new ArrayList<>();
         //根据reportid 获取当前意图测试结果
 
@@ -55,7 +56,7 @@ public class IntentController {
             float radio = (test.getCasePassed() * 100.0f) / test.getCaseNum();
 //            System.out.print(Float.toString(radio));
 //            System.out.print(radio);
-            rlt.setCasePassRadio(Float.toString(radio));
+            rlt.setCasePassRadio(df.format(radio));
             Byte contextual = intentService.getContextualBySummaryId(test.getSummaryId());
 //            System.out.print(contextual.intValue());
             if (contextual.intValue() == 0) {

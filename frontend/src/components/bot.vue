@@ -1,4 +1,4 @@
-<template xmlns: xmlns:>
+<template xmlns: xmlns: xmlns: xmlns: xmlns:>
   <div class="bot">
       <!-- Content Header (Page header) -->
       <section class="content-header">
@@ -15,7 +15,7 @@
       <section class="content">
         <!-- Your Page Content Here -->
         <!-- /.content -->
-        <h3>总览</h3>
+        <h3>1 总览</h3>
         <div class="row">
           <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
@@ -57,19 +57,19 @@
           </div>
           <!-- /.col -->
         </div>
-        <h3>其中</h3>
-        <h4>1，实体</h4>
+        <h3>2 分类通过率</h3>
+        <h4>2.1 实体维度</h4>
         <div class="row">
           <div v-for="e in entity" class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box bg-yellow">
-              <span class="info-box-icon"><i class="fa fa-file"></i></span>
+            <div class="info-box">
+              <span class="info-box-icon bg-light-blue"><i class="fa fa-file"></i></span>
 
               <div class="info-box-content">
                 <span class="info-box-text">{{e.entity_type}}</span>
                 <span class="info-box-number">{{e.case_num}}</span>
 
                 <div class="progress">
-                  <div class="progress-bar" v-bind:style="{width: calculatePercentage(e) + '%'}"></div>
+                  <div class="progress-bar bg-light-blue" v-bind:style="{width: calculatePercentage(e) + '%'}"></div>
                 </div>
                 <span class="progress-description">
                     {{e.pass_radio}}% passed
@@ -78,44 +78,8 @@
               <!-- /.info-box-content -->
             </div>
           </div>
-          <!--<div class="col-md-3 col-sm-6 col-xs-12">-->
-          <!--<div class="info-box bg-yellow">-->
-          <!--<span class="info-box-icon"><i class="fa fa-file"></i></span>-->
-
-          <!--<div class="info-box-content">-->
-          <!--<span class="info-box-text">单实体</span>-->
-          <!--<span class="info-box-number">289</span>-->
-
-          <!--<div class="progress">-->
-          <!--<div class="progress-bar" style="width: 62.6%"></div>-->
-          <!--</div>-->
-          <!--<span class="progress-description">-->
-          <!--62.6% passed-->
-          <!--</span>-->
-          <!--</div>-->
-          <!--&lt;!&ndash; /.info-box-content &ndash;&gt;-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="col-md-3 col-sm-6 col-xs-12">-->
-          <!--<div class="info-box bg-yellow">-->
-          <!--<span class="info-box-icon"><i class="fa fa-file"></i></span>-->
-
-          <!--<div class="info-box-content">-->
-          <!--<span class="info-box-text">多实体</span>-->
-          <!--<span class="info-box-number">3</span>-->
-
-          <!--<div class="progress">-->
-          <!--<div class="progress-bar" style="width: 100%"></div>-->
-          <!--</div>-->
-          <!--<span class="progress-description">-->
-          <!--100% passed-->
-          <!--</span>-->
-          <!--</div>-->
-          <!--&lt;!&ndash; /.info-box-content &ndash;&gt;-->
-          <!--</div>-->
-          <!--</div>-->
         </div>
-        <h4>2，意图</h4>
+        <h4>2.2 意图维度</h4>
         <div class="row">
           <div class="col-xs-12">
             <div class="box">
@@ -146,34 +110,28 @@
             </div>
           </div>
         </div>
-        <h4>3，错误用例</h4>
+        <h3>3，错误用例分析</h3>
+        <h4>3.1 错误类型维度</h4>
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div v-for="error in errorcases" class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-light-blue">
+              <div class="inner">
+                <h3>{{error.case_num}}</h3>
+
+                <p>{{error.error_type}}</p>
+              </div>
+              <!--<div class="icon">-->
+              <!--<i class="fa fa-clone"></i>-->
+              <!--</div>-->
+            </div>
+          </div>
+        </div>
+        <h4>3.2 错误分类</h4>
         <div class="row">
           <div class="col-xs-12">
-            <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">用例信息</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-                <vuetable ref="vuetable"
-                          api-url="/api/errorcase"
-                          :fields="fields1"
-                          :css="css"
-                          data-path=""
-                          pagination-path=""
-                          @vuetable:pagination-data="onPaginationData"
-                ></vuetable>
-                <!--<vuetable-pagination-info ref="paginationInfo"-->
-                <!--:css="css.pagination"-->
-                <!--info-class="pull-left"-->
-                <!--&gt;</vuetable-pagination-info>-->
-                <vuetable-pagination ref="pagination"
-                                     :css="css.pagination"
-                                     @vuetable-pagination:change-page="onChangePage"
-                ></vuetable-pagination>
-              </div>
-              <!-- /.box-body -->
-            </div>
+            <errorcase-table></errorcase-table>
           </div>
         </div>
       </section>
@@ -185,19 +143,19 @@
   import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
   //  import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
   import BootstrapStyle from './bootstrap-css'
+  import errorcasetable from './errorcasetable.vue'
   export default {
     name: 'bot',
     components: {
       'vuetable': Vuetable,
-      'vuetable-pagination': VuetablePagination
+      'vuetable-pagination': VuetablePagination,
+      'errorcase-table': errorcasetable
 //      'vuetable-pagination-info': VuetablePaginationInfo
     },
     data () {
       return {
         css: BootstrapStyle,
-        moreParams: {
-          reportId: 1
-        },
+        reportId: 1,
         fields: [
           {
             name: 'contextual',
@@ -230,28 +188,14 @@
             dataClass: 'text-center'
           }
         ],
-        fields1: [
-          {
-            name: 'name',
-            title: '用例详情',
-            titleClass: 'text-center',
-            dataClass: 'text-center'
-          },
-          {
-            name: 'error_type',
-            title: '错误类型',
-            titleClass: 'text-center',
-            dataClass: 'text-center'
-          },
-          {
-            name: 'intent',
-            title: '意图',
-            titleClass: 'text-center',
-            dataClass: 'text-center'
-          }
-        ],
         summary: [],
-        entity: []
+        entity: [],
+        errorcases: []
+      }
+    },
+    computed: {
+      moreParams () {
+        return {reportId: this.reportId}
       }
     },
     methods: {
@@ -278,13 +222,22 @@
           console.log(response)
         })
       },
-      calculatePercentage(e) {
-        return e.pass_radio;
+      getErrorCases (id) {
+        this.$http.get('/api/errorcases/', {params: {'reportId': id}}).then(response => {
+          this.errorcases = response.body
+          console.log(response.body)
+        }, response => {
+          console.log(response)
+        })
+      },
+      calculatePercentage (e) {
+        return e.pass_radio
       }
     },
     mounted () {
       this.getSummary(1)
       this.getEntityTest(1)
+      this.getErrorCases(1)
     }
   }
 </script>

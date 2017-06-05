@@ -52,15 +52,20 @@ public class ErrorSummaryServiceImpl implements ErrorSummaryService {
             for (ErrorSummary e : errorSummaries) {
                 ErrorSummaryResult rlt = new ErrorSummaryResult();
                 if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.INTENT_UNREC.getNum()))) {
-                    rlt.setErrorType(ErrorEnum.INTENT_UNREC.getErrorType());
+                    rlt.setType_id(ErrorEnum.INTENT_UNREC.getNum());
+                    rlt.setError_type(ErrorEnum.INTENT_UNREC.getErrorType());
                 } else if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.CHAT_REC_OTHER.getNum()))) {
-                    rlt.setErrorType(ErrorEnum.CHAT_REC_OTHER.getErrorType());
+                    rlt.setType_id(ErrorEnum.CHAT_REC_OTHER.getNum());
+                    rlt.setError_type(ErrorEnum.CHAT_REC_OTHER.getErrorType());
                 } else if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.INTENT_MISS.getNum()))) {
-                    rlt.setErrorType(ErrorEnum.INTENT_MISS.getErrorType());
+                    rlt.setType_id(ErrorEnum.INTENT_MISS.getNum());
+                    rlt.setError_type(ErrorEnum.INTENT_MISS.getErrorType());
                 } else if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.ENTITY_ERROR.getNum()))) {
-                    rlt.setErrorType(ErrorEnum.ENTITY_ERROR.getErrorType());
+                    rlt.setType_id(ErrorEnum.ENTITY_ERROR.getNum());
+                    rlt.setError_type(ErrorEnum.ENTITY_ERROR.getErrorType());
                 } else {
-                    rlt.setErrorType("其他错误");
+                    rlt.setType_id(6);
+                    rlt.setError_type("其他错误");
                 }
                 rlt.setCase_num(e.getCaseNum());
                 rlt.setId(e.getId());
@@ -72,19 +77,39 @@ public class ErrorSummaryServiceImpl implements ErrorSummaryService {
     }
 
     @Override
-    public List<ErrorDetailResult> getErrorDetailsById(String type, String errorId) {
+    public List<ErrorDetailResult> getErrorDetailsById(String reportId) {
         List<ErrorDetailResult> results = new ArrayList<>();
 
-        List<ErrorCases> errorCases = errorCasesMapper.selectByTypeAndId(Integer.valueOf(type), Integer.valueOf(errorId));
-        if (errorCases.isEmpty()) {
-            return null;
-        }
-        for (ErrorCases c : errorCases) {
-            ErrorDetailResult rlt = new ErrorDetailResult();
-            rlt.setError_info(c.getErrorInfo());
-            Cases cases = casesMapper.selectByPrimaryKey(c.getCaseId());
-            rlt.setUtterance(cases.getUtterance());
-            results.add(rlt);
+        // 根据reportId找到所有的Summary实例
+        List<Summary> summaries = summaryMapper.selectByReportId(reportId);
+
+        for (Summary s : summaries) {
+            // 根据summaryId找到所有的errorSummary实例
+            List<ErrorSummary> errorSummaries = errorSummaryMapper.selectBySummaryId(s.getId());
+
+            // 根据errorId索引所有的errorInfo errorType
+            for (ErrorSummary e : errorSummaries) {
+                List<ErrorCases> errorCases = errorCasesMapper.selectByErrorId(e.getId());
+                for (ErrorCases c : errorCases) {
+                    ErrorDetailResult rlt = new ErrorDetailResult();
+                    rlt.setError_info(c.getErrorInfo());
+                    int type = c.getErrorType().intValue();
+                    if (type == ErrorEnum.INTENT_UNREC.getNum()) {
+                        rlt.setError_type(ErrorEnum.INTENT_UNREC.getErrorType());
+                    } else if (type == ErrorEnum.CHAT_REC_OTHER.getNum()) {
+                        rlt.setError_type(ErrorEnum.CHAT_REC_OTHER.getErrorType());
+                    } else if (type == ErrorEnum.INTENT_MISS.getNum()) {
+                        rlt.setError_type(ErrorEnum.INTENT_MISS.getErrorType());
+                    } else if (type == ErrorEnum.ENTITY_ERROR.getNum()) {
+                        rlt.setError_type(ErrorEnum.ENTITY_ERROR.getErrorType());
+                    } else {
+                        rlt.setError_type("其他错误");
+                    }
+                    Cases cases = casesMapper.selectByPrimaryKey(c.getCaseId());
+                    rlt.setUtterance(cases.getUtterance());
+                    results.add(rlt);
+                }
+            }
         }
 
         return results;

@@ -8,6 +8,7 @@ package com.netease.Mutest.dto;
  */
 public class ErrorDetailResult {
     private String utterance;
+    private String error_type;
     private String error_info;
 
     public String getUtterance() {
@@ -24,5 +25,13 @@ public class ErrorDetailResult {
 
     public void setError_info(String error_info) {
         this.error_info = error_info;
+    }
+
+    public String getError_type() {
+        return error_type;
+    }
+
+    public void setError_type(String error_type) {
+        this.error_type = error_type;
     }
 }

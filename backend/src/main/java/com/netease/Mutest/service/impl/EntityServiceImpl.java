@@ -11,6 +11,7 @@ import com.netease.Mutest.service.EntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     public ArrayList<EntityTestResult> getEntityTestResultByReportId(String reportId) {
+        DecimalFormat df = new DecimalFormat("#.##");
         ArrayList<EntityTestResult> rltLists = new ArrayList<>();
         List<Summary> summaryList = summaryMapper.selectByReportId(reportId);
         if (summaryList.isEmpty()) {
@@ -47,7 +49,7 @@ public class EntityServiceImpl implements EntityService {
                 }
                 result.setCase_num(e.getCaseNum());
                 result.setCase_passed(e.getCasePassed());
-                result.setPass_radio((e.getCasePassed() * 100.0f) / e.getCaseNum());
+                result.setPass_radio(df.format(((e.getCasePassed() * 100.0f) / e.getCaseNum())));
                 rltLists.add(result);
             }
 

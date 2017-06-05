@@ -37,9 +37,9 @@ public class ErrorSummaryController {
     }
 
     @RequestMapping(value = "/errordetail")
-    public ResponseEntity<List<ErrorDetailResult>> getErrordetail(@RequestParam(value = "type") String type, @RequestParam(value = "errorId") String errorId) {
+    public ResponseEntity<List<ErrorDetailResult>> getErrordetail(@RequestParam(value = "reportId") String reportId) {
 
-        List<ErrorDetailResult> results = errorSummaryService.getErrorDetailsById(type, errorId);
+        List<ErrorDetailResult> results = errorSummaryService.getErrorDetailsById(reportId);
 
         return new ResponseEntity<>(results, HttpStatus.OK);
 

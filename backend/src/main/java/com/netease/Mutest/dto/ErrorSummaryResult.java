@@ -8,15 +8,32 @@ package com.netease.Mutest.dto;
  */
 public class ErrorSummaryResult {
     private Integer id;
-    private String errorType;
+    private Integer type_id;
+    private String error_type;
     private Integer case_num;
 
-    public String getErrorType() {
-        return errorType;
+    public Integer getId() {
+        return id;
     }
 
-    public void setErrorType(String errorType) {
-        this.errorType = errorType;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getType_id() {
+        return type_id;
+    }
+
+    public void setType_id(Integer type_id) {
+        this.type_id = type_id;
+    }
+
+    public String getError_type() {
+        return error_type;
+    }
+
+    public void setError_type(String error_type) {
+        this.error_type = error_type;
     }
 
     public Integer getCase_num() {
@@ -25,13 +42,5 @@ public class ErrorSummaryResult {
 
     public void setCase_num(Integer case_num) {
         this.case_num = case_num;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

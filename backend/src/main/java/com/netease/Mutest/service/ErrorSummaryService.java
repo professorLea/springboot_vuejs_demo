@@ -15,5 +15,5 @@ public interface ErrorSummaryService {
 
     List<ErrorSummaryResult> getErrorSummaryByReportId(String reportId);
 
-    List<ErrorDetailResult> getErrorDetailsById(String type, String errorId);
+    List<ErrorDetailResult> getErrorDetailsById(String errorId);
 }

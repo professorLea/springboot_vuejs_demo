@@ -10,7 +10,7 @@ public class EntityTestResult {
     private String entity_type;
     private Integer case_num;
     private Integer case_passed;
-    private Float pass_radio;
+    private String pass_radio;
 
     public String getEntity_type() {
         return entity_type;
@@ -36,11 +36,11 @@ public class EntityTestResult {
         this.case_passed = case_passed;
     }
 
-    public Float getPass_radio() {
+    public String getPass_radio() {
         return pass_radio;
     }
 
-    public void setPass_radio(Float pass_radio) {
+    public void setPass_radio(String pass_radio) {
         this.pass_radio = pass_radio;
     }
 }

@@ -55,5 +55,5 @@ public interface ErrorCasesMapper {
     int updateByPrimaryKey(ErrorCases record);
 
     //    List<ErrorCases> selectByTypeAndId(@Param("type")Integer type, @Param("errir")Integer errorId);
-    List<ErrorCases> selectByTypeAndId(@Param("errorType") Integer errorType, @Param("errorId") Integer errorId);
+    List<ErrorCases> selectByErrorId(Integer errorId);
 }
