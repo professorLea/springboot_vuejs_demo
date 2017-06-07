@@ -51,15 +51,18 @@ public class ErrorSummaryServiceImpl implements ErrorSummaryService {
             ArrayList<ErrorSummary> errorSummaries = errorSummaryMapper.selectBySummaryId(s.getId());
             for (ErrorSummary e : errorSummaries) {
                 ErrorSummaryResult rlt = new ErrorSummaryResult();
-                if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.INTENT_UNREC.getNum()))) {
+                if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.INTENT_TO_CHAT.getNum()))) {
+                    rlt.setType_id(ErrorEnum.INTENT_TO_CHAT.getNum());
+                    rlt.setError_type(ErrorEnum.INTENT_TO_CHAT.getErrorType());
+                } else if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.INTENT_UNREC.getNum()))) {
                     rlt.setType_id(ErrorEnum.INTENT_UNREC.getNum());
                     rlt.setError_type(ErrorEnum.INTENT_UNREC.getErrorType());
                 } else if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.CHAT_REC_OTHER.getNum()))) {
                     rlt.setType_id(ErrorEnum.CHAT_REC_OTHER.getNum());
                     rlt.setError_type(ErrorEnum.CHAT_REC_OTHER.getErrorType());
-                } else if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.INTENT_MISS.getNum()))) {
-                    rlt.setType_id(ErrorEnum.INTENT_MISS.getNum());
-                    rlt.setError_type(ErrorEnum.INTENT_MISS.getErrorType());
+                } else if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.ENTITY_COUNT_ERROR.getNum()))) {
+                    rlt.setType_id(ErrorEnum.ENTITY_COUNT_ERROR.getNum());
+                    rlt.setError_type(ErrorEnum.ENTITY_COUNT_ERROR.getErrorType());
                 } else if (e.getErrorDesc().equals(Integer.toString(ErrorEnum.ENTITY_ERROR.getNum()))) {
                     rlt.setType_id(ErrorEnum.ENTITY_ERROR.getNum());
                     rlt.setError_type(ErrorEnum.ENTITY_ERROR.getErrorType());
@@ -94,12 +97,14 @@ public class ErrorSummaryServiceImpl implements ErrorSummaryService {
                     ErrorDetailResult rlt = new ErrorDetailResult();
                     rlt.setError_info(c.getErrorInfo());
                     int type = c.getErrorType().intValue();
-                    if (type == ErrorEnum.INTENT_UNREC.getNum()) {
+                    if (type == ErrorEnum.INTENT_TO_CHAT.getNum()) {
+                        rlt.setError_type(ErrorEnum.INTENT_TO_CHAT.getErrorType());
+                    } else if (type == ErrorEnum.INTENT_UNREC.getNum()) {
                         rlt.setError_type(ErrorEnum.INTENT_UNREC.getErrorType());
                     } else if (type == ErrorEnum.CHAT_REC_OTHER.getNum()) {
                         rlt.setError_type(ErrorEnum.CHAT_REC_OTHER.getErrorType());
-                    } else if (type == ErrorEnum.INTENT_MISS.getNum()) {
-                        rlt.setError_type(ErrorEnum.INTENT_MISS.getErrorType());
+                    } else if (type == ErrorEnum.ENTITY_COUNT_ERROR.getNum()) {
+                        rlt.setError_type(ErrorEnum.ENTITY_COUNT_ERROR.getErrorType());
                     } else if (type == ErrorEnum.ENTITY_ERROR.getNum()) {
                         rlt.setError_type(ErrorEnum.ENTITY_ERROR.getErrorType());
                     } else {

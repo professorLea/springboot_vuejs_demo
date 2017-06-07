@@ -13,10 +13,11 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
-    "jquery": "^3.2.1",
     "bootstrap-table": "^1.11.2",
+    "jquery": "^3.2.1",
     "slimscroll": "^0.9.1",
     "vue": "^2.1.0",
+    "vue-echarts-v3": "^1.0.4",
     "vue-resource": "latest",
     "vue-router": "^2.5.3",
     "vuetable-2": "^1.6.0"

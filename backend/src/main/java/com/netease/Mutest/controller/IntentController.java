@@ -34,23 +34,24 @@ public class IntentController {
 
         for (IntentTest test : intentTests) {
             IntentTestResult rlt = new IntentTestResult();
-//            System.out.print(IntentEnum.values());
-            switch (test.getIntentId()) {
-                case 1:
-                    rlt.setIntent(IntentEnum.inquire_refund.getDesc());
-                    break;
-                case 2:
-                    rlt.setIntent(IntentEnum.inquire_express.getDesc());
-                    break;
-                case 3:
-                    rlt.setIntent(IntentEnum.inquire_order.getDesc());
-                    break;
-                case 4:
-                    rlt.setIntent(IntentEnum.chitchat.getDesc());
-                    break;
-                default:
-                    break;
-            }
+////            System.out.print(test.getIntentId());
+//            switch (test.getIntentId()) {
+//                case 1:
+//                    rlt.setIntent(IntentEnum.inquire_refund.getDesc());
+//                    break;
+//                case 2:
+//                    rlt.setIntent(IntentEnum.inquire_express.getDesc());
+//                    break;
+//                case 3:
+//                    rlt.setIntent(IntentEnum.inquire_order.getDesc());
+//                    break;
+//                case 4:
+//                    rlt.setIntent(IntentEnum.chitchat.getDesc());
+//                    break;
+//                default:
+//                    break;
+//            }
+            rlt.setIntent(intentService.getIntentNameById(test.getIntentId()));
             rlt.setCaseNum(Integer.toString(test.getCaseNum()));
             rlt.setCasePassed(Integer.toString(test.getCasePassed()));
             float radio = (test.getCasePassed() * 100.0f) / test.getCaseNum();

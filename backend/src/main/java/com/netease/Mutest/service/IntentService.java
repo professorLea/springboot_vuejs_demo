@@ -16,4 +16,6 @@ public interface IntentService {
     ArrayList<IntentTest> getIntentTestByReportId(String reportId);
 
     Byte getContextualBySummaryId(Integer summaryId);
+
+    String getIntentNameById(Integer id);
 }

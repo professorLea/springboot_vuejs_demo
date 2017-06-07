@@ -1,5 +1,6 @@
 package com.netease.Mutest.service.impl;
 
+import com.netease.Mutest.dao.IntentMapper;
 import com.netease.Mutest.dao.IntentTestMapper;
 import com.netease.Mutest.dao.SummaryMapper;
 import com.netease.Mutest.model.Intent;
@@ -27,6 +28,9 @@ public class IntentServiceImpl implements IntentService {
     @Autowired
     private SummaryMapper summaryMapper;
 
+    @Autowired
+    private IntentMapper intentMapper;
+
 
     @Override
     public ArrayList<IntentTest> getIntentTestByReportId(String reportId) {
@@ -48,6 +52,12 @@ public class IntentServiceImpl implements IntentService {
     @Override
     public Byte getContextualBySummaryId(Integer summaryId) {
         return summaryMapper.selectByPrimaryKey(summaryId).getIsContextual();
+    }
+
+    @Override
+    public String getIntentNameById(Integer id) {
+        Intent intent = intentMapper.selectByPrimaryKey(id);
+        return intent.getName();
     }
 
 

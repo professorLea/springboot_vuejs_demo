@@ -42,13 +42,17 @@
     name: 'errorcasetable',
     data () {
       return {
-        reportId: 1
+        reportId: 3
       }
     },
     computed: {
       getUrl () {
         return '/api/errordetail?reportId=' + this.reportId
       }
+    },
+    mounted: function () {
+      // https://github.com/wenzhixin/bootstrap-table/issues/2902
+      window.jQuery('#table').bootstrapTable({})
     }
   }
 </script>

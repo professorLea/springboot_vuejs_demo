@@ -7,6 +7,7 @@ import com.netease.Mutest.service.SummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ public class SummaryServiceImpl implements SummaryService {
 
     @Override
     public SummaryResult getSummaryResult(String reportid) {
+        DecimalFormat df = new DecimalFormat("#.##");
         Integer total_cases = 0;
         Integer case_passed = 0;
         SummaryResult result = new SummaryResult();
@@ -34,7 +36,8 @@ public class SummaryServiceImpl implements SummaryService {
         }
         result.setTotal_cases(total_cases);
         result.setCase_passed(case_passed);
-        result.setPass_radio((case_passed * 100.0f) / total_cases);
+        Float radio = (case_passed * 100.0f) / total_cases;
+        result.setPass_radio(df.format(radio));
         return result;
     }
 }

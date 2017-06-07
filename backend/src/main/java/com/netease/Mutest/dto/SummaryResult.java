@@ -9,7 +9,7 @@ package com.netease.Mutest.dto;
 public class SummaryResult {
     private Integer total_cases;
     private Integer case_passed;
-    private Float pass_radio;
+    private String pass_radio;
 
     public Integer getTotal_cases() {
         return total_cases;
@@ -27,11 +27,11 @@ public class SummaryResult {
         this.case_passed = case_passed;
     }
 
-    public Float getPass_radio() {
+    public String getPass_radio() {
         return pass_radio;
     }
 
-    public void setPass_radio(Float pass_radio) {
+    public void setPass_radio(String pass_radio) {
         this.pass_radio = pass_radio;
     }
 }
