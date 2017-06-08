@@ -2,6 +2,8 @@
 
 > A Vue.js project
 
+> 这里可以使用淘宝的CNPM，参考：https://npm.taobao.org/
+
 ## Build Setup
 
 ``` bash
