@@ -42,7 +42,7 @@
     name: 'errorcasetable',
     data () {
       return {
-        reportId: 3
+        reportId: 6
       }
     },
     computed: {

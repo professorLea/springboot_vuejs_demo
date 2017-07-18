@@ -183,7 +183,7 @@
     data () {
       return {
         css: BootstrapStyle,
-        reportId: 3,
+        reportId: 6,
         fields: [
           {
             name: 'contextual',
@@ -263,9 +263,9 @@
       }
     },
     mounted () {
-      this.getSummary(3)
-      this.getEntityTest(3)
-      this.getErrorCases(3)
+      this.getSummary(this.reportId)
+      this.getEntityTest(this.reportId)
+      this.getErrorCases(this.reportId)
     }
   }
 </script>
